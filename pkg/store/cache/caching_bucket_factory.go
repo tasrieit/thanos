@@ -4,6 +4,7 @@
 package storecache
 
 import (
+	"crypto/sha256"
 	"regexp"
 	"strings"
 	"time"
@@ -82,6 +83,9 @@ func NewCachingBucketFromYaml(yamlContent []byte, bucket objstore.Bucket, logger
 		return nil, errors.Wrap(err, "parsing config YAML file")
 	}
 
+	sha256ConfigHash := sha256.Sum256(yamlContent)
+	cfgHash := string(sha256ConfigHash[:])
+
 	backendConfig, err := yaml.Marshal(config.BackendConfig)
 	if err != nil {
 		return nil, errors.Wrap(err, "marshal content of cache backend configuration")
@@ -97,7 +101,7 @@ func NewCachingBucketFromYaml(yamlContent []byte, bucket objstore.Bucket, logger
 	cfg.CacheGet("meta.jsons", nil, isMetaFile, int(config.MetafileMaxSize), config.MetafileContentTTL, config.MetafileExistsTTL, config.MetafileDoesntExistTTL)
 
 	// Cache Iter requests for root.
-	cfg.CacheIter("blocks-iter", nil, isBlocksRootDir, config.BlocksIterTTL, JSONIterCodec{})
+	cfg.CacheIter("blocks-iter", nil, isBlocksRootDir, config.BlocksIterTTL, JSONIterCodec{}, cfgHash)
 
 	switch strings.ToUpper(string(config.Type)) {
 	case string(MemcachedBucketCacheProvider):
