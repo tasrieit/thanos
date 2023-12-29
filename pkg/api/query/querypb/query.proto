@@ -41,6 +41,7 @@ message QueryRequest {
 
   bool enableDedup = 7;
   bool enablePartialResponse = 8;
+  // Deprecated
   bool enableQueryPushdown = 9;
   bool skipChunks = 10;
 
@@ -80,6 +81,7 @@ message QueryRangeRequest {
 
   bool enableDedup = 9;
   bool enablePartialResponse = 10;
+  // Deprecated
   bool enableQueryPushdown = 11;
   bool skipChunks = 12;
 

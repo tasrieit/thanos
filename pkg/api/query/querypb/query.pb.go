@@ -59,19 +59,20 @@ func (EngineType) EnumDescriptor() ([]byte, []int) {
 }
 
 type QueryRequest struct {
-	Query                 string             `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	TimeSeconds           int64              `protobuf:"varint,2,opt,name=time_seconds,json=timeSeconds,proto3" json:"time_seconds,omitempty"`
-	TimeoutSeconds        int64              `protobuf:"varint,3,opt,name=timeout_seconds,json=timeoutSeconds,proto3" json:"timeout_seconds,omitempty"`
-	MaxResolutionSeconds  int64              `protobuf:"varint,4,opt,name=max_resolution_seconds,json=maxResolutionSeconds,proto3" json:"max_resolution_seconds,omitempty"`
-	ReplicaLabels         []string           `protobuf:"bytes,5,rep,name=replica_labels,json=replicaLabels,proto3" json:"replica_labels,omitempty"`
-	StoreMatchers         []StoreMatchers    `protobuf:"bytes,6,rep,name=storeMatchers,proto3" json:"storeMatchers"`
-	EnableDedup           bool               `protobuf:"varint,7,opt,name=enableDedup,proto3" json:"enableDedup,omitempty"`
-	EnablePartialResponse bool               `protobuf:"varint,8,opt,name=enablePartialResponse,proto3" json:"enablePartialResponse,omitempty"`
-	EnableQueryPushdown   bool               `protobuf:"varint,9,opt,name=enableQueryPushdown,proto3" json:"enableQueryPushdown,omitempty"`
-	SkipChunks            bool               `protobuf:"varint,10,opt,name=skipChunks,proto3" json:"skipChunks,omitempty"`
-	ShardInfo             *storepb.ShardInfo `protobuf:"bytes,11,opt,name=shard_info,json=shardInfo,proto3" json:"shard_info,omitempty"`
-	LookbackDeltaSeconds  int64              `protobuf:"varint,12,opt,name=lookback_delta_seconds,json=lookbackDeltaSeconds,proto3" json:"lookback_delta_seconds,omitempty"`
-	Engine                EngineType         `protobuf:"varint,13,opt,name=engine,proto3,enum=thanos.EngineType" json:"engine,omitempty"`
+	Query                 string          `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	TimeSeconds           int64           `protobuf:"varint,2,opt,name=time_seconds,json=timeSeconds,proto3" json:"time_seconds,omitempty"`
+	TimeoutSeconds        int64           `protobuf:"varint,3,opt,name=timeout_seconds,json=timeoutSeconds,proto3" json:"timeout_seconds,omitempty"`
+	MaxResolutionSeconds  int64           `protobuf:"varint,4,opt,name=max_resolution_seconds,json=maxResolutionSeconds,proto3" json:"max_resolution_seconds,omitempty"`
+	ReplicaLabels         []string        `protobuf:"bytes,5,rep,name=replica_labels,json=replicaLabels,proto3" json:"replica_labels,omitempty"`
+	StoreMatchers         []StoreMatchers `protobuf:"bytes,6,rep,name=storeMatchers,proto3" json:"storeMatchers"`
+	EnableDedup           bool            `protobuf:"varint,7,opt,name=enableDedup,proto3" json:"enableDedup,omitempty"`
+	EnablePartialResponse bool            `protobuf:"varint,8,opt,name=enablePartialResponse,proto3" json:"enablePartialResponse,omitempty"`
+	// Deprecated
+	EnableQueryPushdown  bool               `protobuf:"varint,9,opt,name=enableQueryPushdown,proto3" json:"enableQueryPushdown,omitempty"`
+	SkipChunks           bool               `protobuf:"varint,10,opt,name=skipChunks,proto3" json:"skipChunks,omitempty"`
+	ShardInfo            *storepb.ShardInfo `protobuf:"bytes,11,opt,name=shard_info,json=shardInfo,proto3" json:"shard_info,omitempty"`
+	LookbackDeltaSeconds int64              `protobuf:"varint,12,opt,name=lookback_delta_seconds,json=lookbackDeltaSeconds,proto3" json:"lookback_delta_seconds,omitempty"`
+	Engine               EngineType         `protobuf:"varint,13,opt,name=engine,proto3,enum=thanos.EngineType" json:"engine,omitempty"`
 }
 
 func (m *QueryRequest) Reset()         { *m = QueryRequest{} }
@@ -230,21 +231,22 @@ func (*QueryResponse) XXX_OneofWrappers() []interface{} {
 }
 
 type QueryRangeRequest struct {
-	Query                 string             `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	StartTimeSeconds      int64              `protobuf:"varint,2,opt,name=start_time_seconds,json=startTimeSeconds,proto3" json:"start_time_seconds,omitempty"`
-	EndTimeSeconds        int64              `protobuf:"varint,3,opt,name=end_time_seconds,json=endTimeSeconds,proto3" json:"end_time_seconds,omitempty"`
-	IntervalSeconds       int64              `protobuf:"varint,4,opt,name=interval_seconds,json=intervalSeconds,proto3" json:"interval_seconds,omitempty"`
-	TimeoutSeconds        int64              `protobuf:"varint,5,opt,name=timeout_seconds,json=timeoutSeconds,proto3" json:"timeout_seconds,omitempty"`
-	MaxResolutionSeconds  int64              `protobuf:"varint,6,opt,name=max_resolution_seconds,json=maxResolutionSeconds,proto3" json:"max_resolution_seconds,omitempty"`
-	ReplicaLabels         []string           `protobuf:"bytes,7,rep,name=replica_labels,json=replicaLabels,proto3" json:"replica_labels,omitempty"`
-	StoreMatchers         []StoreMatchers    `protobuf:"bytes,8,rep,name=storeMatchers,proto3" json:"storeMatchers"`
-	EnableDedup           bool               `protobuf:"varint,9,opt,name=enableDedup,proto3" json:"enableDedup,omitempty"`
-	EnablePartialResponse bool               `protobuf:"varint,10,opt,name=enablePartialResponse,proto3" json:"enablePartialResponse,omitempty"`
-	EnableQueryPushdown   bool               `protobuf:"varint,11,opt,name=enableQueryPushdown,proto3" json:"enableQueryPushdown,omitempty"`
-	SkipChunks            bool               `protobuf:"varint,12,opt,name=skipChunks,proto3" json:"skipChunks,omitempty"`
-	ShardInfo             *storepb.ShardInfo `protobuf:"bytes,13,opt,name=shard_info,json=shardInfo,proto3" json:"shard_info,omitempty"`
-	LookbackDeltaSeconds  int64              `protobuf:"varint,14,opt,name=lookback_delta_seconds,json=lookbackDeltaSeconds,proto3" json:"lookback_delta_seconds,omitempty"`
-	Engine                EngineType         `protobuf:"varint,15,opt,name=engine,proto3,enum=thanos.EngineType" json:"engine,omitempty"`
+	Query                 string          `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	StartTimeSeconds      int64           `protobuf:"varint,2,opt,name=start_time_seconds,json=startTimeSeconds,proto3" json:"start_time_seconds,omitempty"`
+	EndTimeSeconds        int64           `protobuf:"varint,3,opt,name=end_time_seconds,json=endTimeSeconds,proto3" json:"end_time_seconds,omitempty"`
+	IntervalSeconds       int64           `protobuf:"varint,4,opt,name=interval_seconds,json=intervalSeconds,proto3" json:"interval_seconds,omitempty"`
+	TimeoutSeconds        int64           `protobuf:"varint,5,opt,name=timeout_seconds,json=timeoutSeconds,proto3" json:"timeout_seconds,omitempty"`
+	MaxResolutionSeconds  int64           `protobuf:"varint,6,opt,name=max_resolution_seconds,json=maxResolutionSeconds,proto3" json:"max_resolution_seconds,omitempty"`
+	ReplicaLabels         []string        `protobuf:"bytes,7,rep,name=replica_labels,json=replicaLabels,proto3" json:"replica_labels,omitempty"`
+	StoreMatchers         []StoreMatchers `protobuf:"bytes,8,rep,name=storeMatchers,proto3" json:"storeMatchers"`
+	EnableDedup           bool            `protobuf:"varint,9,opt,name=enableDedup,proto3" json:"enableDedup,omitempty"`
+	EnablePartialResponse bool            `protobuf:"varint,10,opt,name=enablePartialResponse,proto3" json:"enablePartialResponse,omitempty"`
+	// Deprecated
+	EnableQueryPushdown  bool               `protobuf:"varint,11,opt,name=enableQueryPushdown,proto3" json:"enableQueryPushdown,omitempty"`
+	SkipChunks           bool               `protobuf:"varint,12,opt,name=skipChunks,proto3" json:"skipChunks,omitempty"`
+	ShardInfo            *storepb.ShardInfo `protobuf:"bytes,13,opt,name=shard_info,json=shardInfo,proto3" json:"shard_info,omitempty"`
+	LookbackDeltaSeconds int64              `protobuf:"varint,14,opt,name=lookback_delta_seconds,json=lookbackDeltaSeconds,proto3" json:"lookback_delta_seconds,omitempty"`
+	Engine               EngineType         `protobuf:"varint,15,opt,name=engine,proto3,enum=thanos.EngineType" json:"engine,omitempty"`
 }
 
 func (m *QueryRangeRequest) Reset()         { *m = QueryRangeRequest{} }
